@@ -1,0 +1,51 @@
+{
+  "name": "react-bootstrap-toggle-switch",
+  "version": "1.0.0",
+  "description": "Based on Bootstrap Toggle, React Bootstrap Toggle Switch is a highly flexible Bootstrap plugin that toggles between checkbox style values.",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/speedymorales/react-bootstrap-toggle-switch.git"
+  },
+  "keywords": [
+    "react",
+    "bootstrap",
+    "react-bootstrap-toggle",
+    "bootstrap4",
+    "toggle",
+    "bootstrap-toggle",
+    "switch",
+    "bootstrap-switch",
+    "on-off"
+  ],
+  "author": "speedymorales",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/speedymorales/react-bootstrap-toggle-switch/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/speedymorales/react-bootstrap-toggle-switch#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.6",
+    "@types/react-dom": "^17.0.5",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rollup": "^2.48.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^4.2.4"
+  }
+}
