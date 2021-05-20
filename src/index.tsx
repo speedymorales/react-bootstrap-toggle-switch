@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
-import "./style.css";
+import { useEffect, useState } from "react";
+import "./styles.css";
 
-type BootBtnType =
+type ToggleButtonType =
   | "primary"
   | "secondary"
   | "success"
@@ -10,43 +10,47 @@ type BootBtnType =
   | "warning"
   | "info"
   | "light"
-  | "dark";
+  | "dark"
+  | "default";
 interface Props {
   checked?: boolean;
   disabled?: boolean;
-  onlabel?: string;
-  offlabel?: string;
-  onstyle?: BootBtnType;
-  offstyle?: BootBtnType;
+  onLabel?: string;
+  offLabel?: string;
+  onStyle?: ToggleButtonType;
+  offStyle?: ToggleButtonType;
   size?: "lg" | "md" | "sm" | "xs";
-  style?: string;
+  className?: string;
+  tabIndex?: number;
   width?: number;
   height?: number;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
 }
 
 interface InternalState {
   checked: boolean;
   disabled: boolean;
-  onlabel: string;
-  offlabel: string;
-  onstyle: BootBtnType;
-  offstyle: BootBtnType;
+  onLabel: string;
+  offLabel: string;
+  onStyle: ToggleButtonType;
+  offStyle: ToggleButtonType;
   size: "lg" | "md" | "sm" | "xs";
-  style: string;
+  className: string;
+  tabIndex: number;
   width: number | null;
   height: number | null;
 }
 
-export const BootstrapToggle: React.FC<Props> = ({
+export const Bootstrap4Toggle: React.FC<Props> = ({
   checked,
   disabled,
-  onlabel,
-  offlabel,
-  onstyle,
-  offstyle,
+  onLabel,
+  offLabel,
+  onStyle,
+  offStyle,
   size,
-  style,
+  className,
+  tabIndex,
   width,
   height,
   onChange,
@@ -54,102 +58,99 @@ export const BootstrapToggle: React.FC<Props> = ({
   const [state, setState] = useState<InternalState>({
     checked: !!checked,
     disabled: !!disabled,
-    onlabel: onlabel || "On",
-    offlabel: offlabel || "Off",
-    onstyle: onstyle || "primary",
-    offstyle: offstyle || "light",
+    onLabel: onLabel || "On",
+    offLabel: offLabel || "Off",
+    onStyle: onStyle || "primary",
+    offStyle: offStyle || "default",
     size: size || "md",
-    style: style || "",
+    className: className || "",
+    tabIndex: tabIndex ? tabIndex : 0,
     width: width || null,
     height: height || null,
   });
 
   useEffect(() => {
-    // TODO: ensure that any change in props is reflected in state.
     setState({
       checked: !!checked,
       disabled: !!disabled,
-      onlabel: onlabel || "On",
-      offlabel: offlabel || "Off",
-      onstyle: onstyle || "primary",
-      offstyle: offstyle || "light",
+      onLabel: onLabel || "On",
+      offLabel: offLabel || "Off",
+      onStyle: onStyle || "primary",
+      offStyle: offStyle || "default",
       size: size || "md",
-      style: style || "",
+      className: className || "",
+      tabIndex: tabIndex ? tabIndex : 0,
       width: width || null,
       height: height || null,
     });
   }, [
     checked,
     disabled,
-    onlabel,
-    offlabel,
-    onstyle,
-    offstyle,
+    onLabel,
+    offLabel,
+    onStyle,
+    offStyle,
     size,
-    style,
+    className,
+    tabIndex,
     width,
     height,
   ]);
 
-  const toggle = useCallback(() => {
+  const toggle = () => {
     if (state.disabled) return;
-    if (state.checked) {
-      setState({ ...state, checked: true });
-      if (onChange) onChange(true);
-    } else {
-      setState({ ...state, checked: false });
-      if (onChange) onChange(false);
-    }
-  }, [setState, onChange]);
+    setState({ ...state, checked: !state.checked });
+    if (onChange) onChange(!state.checked);
+  };
 
-  let switchStyle: any = {};
-  if (state.width) switchStyle.width = state.width + "px";
-  if (state.height) switchStyle.height = state.height + "px";
+  const onKeyPress = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === " " || ev.key === "t") {
+      toggle();
+    }
+  };
+
+  let textHeight: number = 0;
+  textHeight = state.size === "sm" ? 12 : textHeight;
+  textHeight = state.size === "md" ? 15 : textHeight;
+  textHeight = state.size === "lg" ? 18 : textHeight;
+
+  let toggleStyle: any = {};
+  if (state.width) toggleStyle.width = state.width + "px";
+  if (state.height) toggleStyle.height = state.height + "px";
 
   let labelStyle: any = {};
   if (state.height)
-    labelStyle.lineHeight = "calc(" + state.height + "px * 0.8)";
+    labelStyle.lineHeight = `calc(${state.height}px - ${textHeight}px)`;
 
+  const sizeClass = state.size ? ` btn-${state.size}` : "";
+  const checkedStyle = state.checked
+    ? `on btn-${state.onStyle}`
+    : `off btn-${state.offStyle}`;
+  const extraClasses = state.className ? ` ${state.className}` : "";
+  const disabledClass = state.disabled ? " disabled" : "";
   return (
     <div
-      className={
-        "switch btn " +
-        (state.checked
-          ? "on btn-" + state.onstyle
-          : "off btn-" + state.offstyle) +
-        (state.size ? " btn-" + state.size : "") +
-        (state.style ? " " + state.style : "")
-      }
-      style={switchStyle}
+      className={`btn toggle ${checkedStyle}${sizeClass}${extraClasses}${disabledClass}`}
+      data-toggle="toggle"
+      tabIndex={!state.disabled ? state.tabIndex : undefined}
+      style={toggleStyle}
       onClick={toggle}
+      onKeyPress={onKeyPress}
     >
-      <div className="switch-group">
-        <span
-          className={
-            "switch-on btn btn-" +
-            state.onstyle +
-            (state.size ? " btn-" + state.size : "")
-          }
+      <div className="toggle-group">
+        <label
+          className={`toggle-on btn btn-${state.onStyle}${sizeClass}`}
           style={labelStyle}
         >
-          {state.onlabel}
-        </span>
-        <span
-          className={
-            "switch-off btn btn-" +
-            state.offstyle +
-            (state.size ? " btn-" + state.size : "")
-          }
+          {state.onLabel}
+        </label>
+        <label
+          className={`toggle-off active btn btn-${state.offStyle}${sizeClass}`}
           style={labelStyle}
         >
-          {state.offlabel}
-        </span>
-        <span
-          className={
-            "switch-handle btn btn-light" +
-            (state.size ? "btn-" + state.size : "")
-          }
-        />
+          {state.offLabel}
+        </label>
+        <span className={`toggle-handle btn btn-default${sizeClass}`} />
       </div>
     </div>
   );

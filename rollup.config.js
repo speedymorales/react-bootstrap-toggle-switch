@@ -18,7 +18,7 @@ export default {
     typescript(),
     postcss({
       extract: true,
-      modules: true,
+      minimize: true,
     }),
   ],
   external: ["react", "react-dom"],
