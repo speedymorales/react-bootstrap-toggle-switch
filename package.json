@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-toggle-switch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Based on Bootstrap Toggle, React Bootstrap Toggle Switch is a highly flexible Bootstrap plugin that toggles between checkbox style values.",
   "main": "dist/index.js",
   "engines": {
