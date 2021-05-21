@@ -97,15 +97,28 @@ export const Bootstrap4Toggle: React.FC<Props> = ({
     height,
   ]);
 
-  const toggle = () => {
-    if (state.disabled) return;
-    setState({ ...state, checked: !state.checked });
-    if (onChange) onChange(!state.checked);
+  const changeState = (checked: boolean) => {
+    setState({ ...state, checked });
+    if (onChange) onChange(checked);
   };
 
-  const onKeyPress = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+  const toggle = () => {
+    if (state.disabled) return;
+    changeState(!state.checked);
+  };
+
+  const onKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
     if (ev.key === " " || ev.key === "t") {
+      ev.preventDefault();
       toggle();
+    }
+    if (ev.key === "ArrowLeft" && state.checked) {
+      ev.preventDefault();
+      changeState(!state.checked);
+    }
+    if (ev.key === "ArrowRight" && !state.checked) {
+      ev.preventDefault();
+      changeState(!state.checked);
     }
   };
 
@@ -135,7 +148,7 @@ export const Bootstrap4Toggle: React.FC<Props> = ({
       tabIndex={!state.disabled ? state.tabIndex : undefined}
       style={toggleStyle}
       onClick={toggle}
-      onKeyPress={onKeyPress}
+      onKeyDown={onKeyDown}
     >
       <div className="toggle-group">
         <label
