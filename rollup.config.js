@@ -17,7 +17,7 @@ export default {
   plugins: [
     typescript(),
     postcss({
-      extract: true,
+      extensions: [".css"],
       minimize: true,
     }),
   ],
