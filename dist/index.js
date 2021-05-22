@@ -158,7 +158,7 @@ var Bootstrap4Toggle = function (_a) {
     var labelStyle = {};
     if (state.height)
         labelStyle.lineHeight = "calc(" + state.height + "px - " + textHeight + "px)";
-    var sizeClass = state.size ? " btn-" + state.size : "";
+    var sizeClass = " btn-" + state.size;
     var checkedStyle = state.checked
         ? "on btn-" + state.onStyle
         : "off btn-" + state.offStyle;

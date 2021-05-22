@@ -19,7 +19,7 @@ interface Props {
   offLabel?: string;
   onStyle?: ToggleButtonType;
   offStyle?: ToggleButtonType;
-  size?: "lg" | "md" | "sm" | "xs";
+  size?: "lg" | "md" | "sm";
   className?: string;
   tabIndex?: number;
   width?: number;
@@ -34,7 +34,7 @@ interface InternalState {
   offLabel: string;
   onStyle: ToggleButtonType;
   offStyle: ToggleButtonType;
-  size: "lg" | "md" | "sm" | "xs";
+  size: "lg" | "md" | "sm";
   className: string;
   tabIndex: number;
   width: number | null;
@@ -122,20 +122,20 @@ export const Bootstrap4Toggle: React.FC<Props> = ({
     }
   };
 
-  let textHeight: number = 0;
+  let textHeight = 0;
   textHeight = state.size === "sm" ? 12 : textHeight;
   textHeight = state.size === "md" ? 15 : textHeight;
   textHeight = state.size === "lg" ? 18 : textHeight;
 
-  let toggleStyle: any = {};
+  const toggleStyle: any = {};
   if (state.width) toggleStyle.width = state.width + "px";
   if (state.height) toggleStyle.height = state.height + "px";
 
-  let labelStyle: any = {};
+  const labelStyle: any = {};
   if (state.height)
     labelStyle.lineHeight = `calc(${state.height}px - ${textHeight}px)`;
 
-  const sizeClass = state.size ? ` btn-${state.size}` : "";
+  const sizeClass = ` btn-${state.size}`;
   const checkedStyle = state.checked
     ? `on btn-${state.onStyle}`
     : `off btn-${state.offStyle}`;
