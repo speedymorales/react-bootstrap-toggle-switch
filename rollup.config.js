@@ -4,7 +4,7 @@ import postcss from "rollup-plugin-postcss";
 import pkg from "./package.json";
 
 export default {
-  input: "src/index.tsx",
+  input: "src/Bootstrap4Toggle.tsx",
   output: [
     {
       file: pkg.main,
